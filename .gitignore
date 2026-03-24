@@ -1,0 +1,28 @@
+﻿# Build folders
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+appsettings.Development.json
+
+# EF migrations (opsiyonel)
+# Migrations/
+
+# Rider / VSCode
+.idea/
+.vscode/
+
+# Publish
+*.publishsettings
