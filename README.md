@@ -16,8 +16,6 @@ Includes caching, rate limiting, and clean architecture principles.
 - ✅ Validation & error handling
 - 🗄️ Entity Framework Core (Code First)
 
----
-
 ## 🛠️ Tech Stack
 
 - ⚙️ ASP.NET Core 8
@@ -25,8 +23,6 @@ Includes caching, rate limiting, and clean architecture principles.
 - 💾 SQL Server (LocalDB)
 - ⚡ Redis (Docker)
 - 📄 Swagger (OpenAPI)
-
----
 
 ## 🚀 Live Demo (Local)
 
@@ -37,51 +33,49 @@ Includes caching, rate limiting, and clean architecture principles.
 
 ## ⚙️ Installation & Setup
 
-### 🔹 1. Clone the repository
+🔹 **1. Clone the repository**
 
-```bash
+```powershell
 git clone https://github.com/mesutdalkilic/UrlShortener.git
 cd UrlShortener
 
-🔹 2. Install dependencies
-```bash
+🔹 **2. Install dependencies**
+```powershell
 dotnet restore
 
-🔹 3. Run Redis (Docker required)
+🔹 **3. Run Redis (Docker required)**
 
 👉 Open PowerShell / CMD / VS Terminal and run:
-```bash
+```powershell
 docker run -d -p 6379:6379 --name redis redis
 
 👉 Check if running:
-```bash
+```powershell
 docker ps
 
 👉 Optional test:
-```bash
+```powershell
 docker exec -it redis redis-cli
-
 PING
 
 Expected output:
 PONG
 
-🔹 4. Run the application
-```bash
+🔹 **4. Run the application**
+```powershell
 dotnet run
 
-🔹 5. Open Swagger
+🔹 **5. Open Swagger**
 https://localhost:7013/swagger
 
 
-📌 API Endpoints
+📌 **API Endpoints**
 
 🔗 Create Short URL
 
 POST /api/url/shorten
 
 Body:
-```bash
 {
   "url": "https://google.com"
 }
@@ -91,24 +85,23 @@ Body:
 GET /{shortCode}
 
 
-🚦 Rate Limiting
+🚦 **Rate Limiting**
 Limit: 3 requests per 10 seconds
 Returns:
-```bash
 {
   "error": "Too many requests"
 }
 
 ---
 
-⚡ Redis Caching
+⚡ **Redis Caching**
 - Cache key: url:{shortCode}
 - Expiration: 10 minutes
 - Improves performance by reducing DB calls
 
 ---
 
-🧠 What I Learned
+🧠 **What I Learned**
 - 🧩 RESTful API design
 - ⚡ Rate limiting strategies
 - 🧠 Distributed caching with Redis
@@ -117,13 +110,13 @@ Returns:
 
 ---
 
-🔒 Security
+🔒 **Security**
 - 🔐 Sensitive files excluded via .gitignore
 - ❌ No secrets committed to repository
 
 ---
 
-🚀 Future Improvements
+🚀 **Future Improvements**
 - 🔐 Authentication & Authorization (JWT)
 - ⚡ Distributed rate limiting (Redis-based)
 - 📊 Logging (Serilog)
@@ -131,7 +124,7 @@ Returns:
 
 ---
 
-📂 Project Structure
+📂 **Project Structure**
 
 UrlShortener/
 │
