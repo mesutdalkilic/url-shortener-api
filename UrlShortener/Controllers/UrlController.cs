@@ -2,6 +2,11 @@
 using UrlShortener.Data;
 using UrlShortener.Models;
 using UrlShortener.DTOs;
+using UrlShortener.Utils;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
+
 
 namespace UrlShortener.Controllers;
 
@@ -10,15 +15,18 @@ namespace UrlShortener.Controllers;
 public class UrlController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private readonly IDistributedCache _cache; // Redis cache için
 
     // Dependency Injection
-    public UrlController(AppDbContext context)
+    public UrlController(AppDbContext context, IDistributedCache cache)
     {
         _context = context;
+        _cache = cache; // Redis cache için
     }
 
     // URL KISALTMA
     [HttpPost("shorten")]
+    [EnableRateLimiting("fixed")] // Rate limiting uygulanır
     public IActionResult Shorten([FromBody] CreateShortUrlRequest request)
     {
         // Validation
@@ -28,35 +36,70 @@ public class UrlController : ControllerBase
         if (!Uri.IsWellFormedUriString(request.Url, UriKind.Absolute))
             return BadRequest("Geçersiz URL");
 
-        var shortCode = Guid.NewGuid().ToString().Substring(0, 6);
-
         var shortUrl = new ShortUrl
         {
-            OriginalUrl = request.Url,
-            ShortCode = shortCode
+            OriginalUrl = request.Url
+            // ShortCode sonra üretilecek
         };
 
         _context.ShortUrls.Add(shortUrl);
-        _context.SaveChanges();
+        _context.SaveChanges(); // ID burada oluşur
 
-        var resultUrl = $"{Request.Scheme}://{Request.Host}/{shortCode}";
+        // Base62 encode
+        shortUrl.ShortCode = Base62Service.Encode(shortUrl.Id);
 
-        var response = new ShortUrlResponse
-        {
-            ShortUrl = resultUrl,
-            OriginalUrl = shortUrl.OriginalUrl,
-            ClickCount = shortUrl.ClickCount,
-            CreatedAt = shortUrl.CreatedAt
-        };
+        _context.SaveChanges(); // tekrar kaydet
 
-        return Ok(response);
+        var resultUrl = $"{Request.Scheme}://{Request.Host}/{shortUrl.ShortCode}";
+
+        return Ok(resultUrl);
     }
 
     // REDIRECT
     [HttpGet("{code}")]
-    public IActionResult RedirectToOriginal(string code)
+    public async Task<IActionResult> RedirectToOriginal(string code)
     {
-        var url = _context.ShortUrls.FirstOrDefault(x => x.ShortCode == code);
+        var cacheKey = $"url:{code}"; // her URL için unique key
+
+        // Cache kontrol
+        var cachedData = await _cache.GetStringAsync(cacheKey);
+
+        ShortUrl? url;
+
+        if (cachedData != null)
+        {
+            // Cache HIT → hızlı
+            url = JsonSerializer.Deserialize<ShortUrl>(cachedData);
+        }
+        else
+        {
+            // Cache MISS → DB'ye git
+            url = _context.ShortUrls.FirstOrDefault(x => x.ShortCode == code);
+
+            if (url != null)
+            {
+                var options = new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+                };
+
+                // Cache'e yaz
+                await _cache.SetStringAsync(
+                    cacheKey,
+                    JsonSerializer.Serialize(url),
+                    options
+                );
+            }
+        }
+
+        if (url == null)
+            return NotFound();
+
+        // Click sayısı artır
+        url.ClickCount++;
+        _context.SaveChanges();
+
+        return Redirect(url.OriginalUrl);
 
         if (url == null)
             return NotFound();
