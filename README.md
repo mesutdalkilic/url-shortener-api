@@ -35,81 +35,88 @@ Includes caching, rate limiting, and clean architecture principles.
 
 🔹 **1. Clone the repository**
 
-git clone https://github.com/mesutdalkilic/UrlShortener.git
-`cd UrlShortener`
+```git clone https://github.com/mesutdalkilic/UrlShortener.git```
 
-🔹 2. Install dependencies
-`dotnet restore`
+```cd UrlShortener```
 
-🔹 3. Run Redis (Docker required)
+🔹 **2. Install dependencies**
+
+```dotnet restore```
+
+🔹 **3. Run Redis (Docker required)**
 
 👉 Open PowerShell / CMD / VS Terminal and run:
-`docker run -d -p 6379:6379 --name redis redis`
+```docker run -d -p 6379:6379 --name redis redis```
 
 👉 Check if running:
-`docker ps`
+```docker ps```
 
 👉 Optional test:
-`docker exec -it redis redis-cli`
+```docker exec -it redis redis-cli```
 PING
 
 Expected output:
 PONG
 
-🔹 4. Run the application
-`dotnet run`
+🔹 **4. Run the application**
 
-🔹 5. Open Swagger
+```dotnet run```
+
+🔹 **5. Open Swagger**
+
 https://localhost:7013/swagger
 
 
-📌 API Endpoints
+📌 **API Endpoints**
 
 🔗 Create Short URL
 
 POST /api/url/shorten
-
+```
 Body:
 {
   "url": "https://google.com"
 }
+```
 
-🔗 Redirect
+🔗 **Redirect**
 
 GET /{shortCode}
 
 
-🚦 Rate Limiting
+🚦 **Rate Limiting**
 Limit: 3 requests per 10 seconds
 Returns:
+```
 {
   "error": "Too many requests"
 }
+```
 
-⚡ Redis Caching
+⚡ **Redis Caching**
 - Cache key: url:{shortCode}
 - Expiration: 10 minutes
 - Improves performance by reducing DB calls
 
-🧠 What I Learned
+🧠 **What I Learned**
 - 🧩 RESTful API design
 - ⚡ Rate limiting strategies
 - 🧠 Distributed caching with Redis
 - 🔌 Dependency Injection in .NET
 - 🧱 Clean architecture practices
 
-🔒 Security
+🔒 **Security**
 - 🔐 Sensitive files excluded via .gitignore
 - ❌ No secrets committed to repository
 
-🚀 Future Improvements
+🚀 **Future Improvements**
 - 🔐 Authentication & Authorization (JWT)
 - ⚡ Distributed rate limiting (Redis-based)
 - 📊 Logging (Serilog)
 - 🐳 Docker Compose setup
 
-📂 Project Structure
-```powershell
+📂 **Project Structure**
+```
 UrlShortener/
 │
 ├── Controllers/
@@ -122,3 +129,5 @@ UrlShortener/
 ├── UrlShortener.csproj
 ├── README.md
 ├── .gitignore
+
+```
