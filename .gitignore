@@ -6,6 +6,8 @@ obj/
 .vs/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
 
 # Logs
 *.log
@@ -13,14 +15,15 @@ obj/
 # OS
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Environment
+# Environment / secrets
 appsettings.Development.json
+*.db
+*.sqlite
+.env
 
-# EF migrations (opsiyonel)
-# Migrations/
-
-# Rider / VSCode
+# IDEs
 .idea/
 .vscode/
 
