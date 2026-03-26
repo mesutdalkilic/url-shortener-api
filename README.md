@@ -35,7 +35,6 @@ Includes caching, rate limiting, and clean architecture principles.
 
 🔹 **1. Clone the repository**
 
-```powershell
 git clone https://github.com/mesutdalkilic/UrlShortener.git
 cd UrlShortener
 
@@ -87,14 +86,10 @@ Returns:
   "error": "Too many requests"
 }
 
----
-
 ⚡ Redis Caching
 - Cache key: url:{shortCode}
 - Expiration: 10 minutes
 - Improves performance by reducing DB calls
-
----
 
 🧠 What I Learned
 - 🧩 RESTful API design
@@ -103,21 +98,15 @@ Returns:
 - 🔌 Dependency Injection in .NET
 - 🧱 Clean architecture practices
 
----
-
 🔒 Security
 - 🔐 Sensitive files excluded via .gitignore
 - ❌ No secrets committed to repository
-
----
 
 🚀 Future Improvements
 - 🔐 Authentication & Authorization (JWT)
 - ⚡ Distributed rate limiting (Redis-based)
 - 📊 Logging (Serilog)
 - 🐳 Docker Compose setup
-
----
 
 📂 Project Structure
 
