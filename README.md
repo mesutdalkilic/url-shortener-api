@@ -36,28 +36,28 @@ Includes caching, rate limiting, and clean architecture principles.
 🔹 **1. Clone the repository**
 
 git clone https://github.com/mesutdalkilic/UrlShortener.git
-cd UrlShortener
+`cd UrlShortener`
 
 🔹 2. Install dependencies
-dotnet restore
+`dotnet restore`
 
 🔹 3. Run Redis (Docker required)
 
 👉 Open PowerShell / CMD / VS Terminal and run:
-docker run -d -p 6379:6379 --name redis redis
+`docker run -d -p 6379:6379 --name redis redis`
 
 👉 Check if running:
-docker ps
+`docker ps`
 
 👉 Optional test:
-docker exec -it redis redis-cli
+`docker exec -it redis redis-cli`
 PING
 
 Expected output:
 PONG
 
 🔹 4. Run the application
-dotnet run
+`dotnet run`
 
 🔹 5. Open Swagger
 https://localhost:7013/swagger
@@ -109,7 +109,7 @@ Returns:
 - 🐳 Docker Compose setup
 
 📂 Project Structure
-
+```powershell
 UrlShortener/
 │
 ├── Controllers/
