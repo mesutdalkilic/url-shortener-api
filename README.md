@@ -1,4 +1,4 @@
-URL Shortener API (.NET 8)
+# URL Shortener API (.NET 8)
 
 Production-ready URL Shortener API built with ASP.NET Core (.NET 8).  
 Includes caching, rate limiting, and clean architecture principles.
@@ -43,11 +43,11 @@ Includes caching, rate limiting, and clean architecture principles.
 git clone https://github.com/mesutdalkilic/UrlShortener.git
 cd UrlShortener
 
-### 🔹 2. Install dependencies
+🔹 2. Install dependencies
 ```bash
 dotnet restore
 
-### 🔹 3. Run Redis (Docker required)
+🔹 3. Run Redis (Docker required)
 
 👉 Open PowerShell / CMD / VS Terminal and run:
 ```bash
@@ -66,11 +66,11 @@ PING
 Expected output:
 PONG
 
-### 🔹 4. Run the application
+🔹 4. Run the application
 ```bash
 dotnet run
 
-### 🔹 5. Open Swagger
+🔹 5. Open Swagger
 https://localhost:7013/swagger
 
 
