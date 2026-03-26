@@ -39,40 +39,32 @@ Includes caching, rate limiting, and clean architecture principles.
 git clone https://github.com/mesutdalkilic/UrlShortener.git
 cd UrlShortener
 
----
-
-
-🔹 **2. Install dependencies**
-```powershell
+🔹 2. Install dependencies
 dotnet restore
 
-🔹 **3. Run Redis (Docker required)**
+🔹 3. Run Redis (Docker required)
 
 👉 Open PowerShell / CMD / VS Terminal and run:
-```powershell
 docker run -d -p 6379:6379 --name redis redis
 
 👉 Check if running:
-```powershell
 docker ps
 
 👉 Optional test:
-```powershell
 docker exec -it redis redis-cli
 PING
 
 Expected output:
 PONG
 
-🔹 **4. Run the application**
-```powershell
+🔹 4. Run the application
 dotnet run
 
-🔹 **5. Open Swagger**
+🔹 5. Open Swagger
 https://localhost:7013/swagger
 
 
-📌 **API Endpoints**
+📌 API Endpoints
 
 🔗 Create Short URL
 
@@ -88,7 +80,7 @@ Body:
 GET /{shortCode}
 
 
-🚦 **Rate Limiting**
+🚦 Rate Limiting
 Limit: 3 requests per 10 seconds
 Returns:
 {
@@ -97,14 +89,14 @@ Returns:
 
 ---
 
-⚡ **Redis Caching**
+⚡ Redis Caching
 - Cache key: url:{shortCode}
 - Expiration: 10 minutes
 - Improves performance by reducing DB calls
 
 ---
 
-🧠 **What I Learned**
+🧠 What I Learned
 - 🧩 RESTful API design
 - ⚡ Rate limiting strategies
 - 🧠 Distributed caching with Redis
@@ -113,13 +105,13 @@ Returns:
 
 ---
 
-🔒 **Security**
+🔒 Security
 - 🔐 Sensitive files excluded via .gitignore
 - ❌ No secrets committed to repository
 
 ---
 
-🚀 **Future Improvements**
+🚀 Future Improvements
 - 🔐 Authentication & Authorization (JWT)
 - ⚡ Distributed rate limiting (Redis-based)
 - 📊 Logging (Serilog)
@@ -127,7 +119,7 @@ Returns:
 
 ---
 
-📂 **Project Structure**
+📂 Project Structure
 
 UrlShortener/
 │
@@ -141,8 +133,3 @@ UrlShortener/
 ├── UrlShortener.csproj
 ├── README.md
 ├── .gitignore
-
-
----
-
-# 🎯
